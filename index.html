@@ -496,10 +496,31 @@ section {
              /* background-color: #3d3d3d; */
           
         }
-    @media (max-width: 768px) {
+   
+
+
+@media (max-width: 768px) {
+    /* Header ki padding thori adjust ki taake wo mobile pe extra space na le */
+    .header {
+        padding: 0rem 0%;
+    }
+
     .home {
-        margin-top: 25px;   /* halka visible gap */
+        /* Ye margin-top navbar ke height ke hisaab se hai. 
+           Agar gap abhi bhi zyada lage to isko 80px se kam karke 60px ya 50px kar lein */
+        margin-top: 0px; 
         padding-top: 0;
+        
+        /* Mobile pe text aur image side-by-side ki jagah upar neche aayen */
+        flex-direction: column; 
+        text-align: center; /* Text mobile pe center mein zyada acha lagta hai */
+        gap: 0rem; /* Image aur text ke darmiyan gap set kiya */
+    }
+
+    /* Mobile screen par image choti (35vw) dikhne ke bajaye poori aur wazeh dikhe */
+    .home-img img {
+        width: 70vw; 
+        height: 70vw;
     }
 
     body {
@@ -2761,6 +2782,8 @@ body {
         </div>
         <div class="home-img">
             <img src="juctcheckingb.jpeg" alt="Profile">
+
+            
           
             
            
@@ -2777,6 +2800,9 @@ document.addEventListener("DOMContentLoaded", function () {
         "juctcheckingb.jpeg",
         "newing.jpeg",
         "justcheckinggreen.jpeg"
+
+
+       
     ];
 
     const imgElement = document.querySelector(".home-img img");
