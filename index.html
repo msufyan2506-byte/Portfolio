@@ -360,7 +360,6 @@
             justify-content: center;
             align-items: center;
             gap: 5rem;
-            /* background: linear-gradient(to right, rgba(0,0,0,0.7) 50%, rgba(0,100,0,0.7) 100%); */
         }
 
         .home-content h3 {
@@ -718,7 +717,25 @@
         .heading {
             text-align: center;
             font-size: 4.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- FIX: Graphic Design Heading on Mobile --- */
+        @media (max-width: 600px) {
+            .heading {
+                font-size: 3.2rem !important;
+                white-space: nowrap !important;
+            }
+            .heading span {
+                display: inline !important;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .heading {
+                font-size: 2.6rem !important;
+                white-space: nowrap !important;
+            }
         }
 
         /* --- PROJECTS --- */
@@ -2634,85 +2651,87 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
 </section>
+
 <style>
     /* --- FIXED SUBMIT BUTTON --- */
-.submit-btn {
-    width: 100% !important;
-    padding: 1.4rem !important;
-    font-size: 1.8rem !important;
-    font-weight: 600 !important;
-    background: var(--main-color) !important;
-    color: #000 !important;
-    border: 2px solid var(--main-color) !important;
-    border-radius: 4rem !important;
-    cursor: pointer !important;
-    transition: 0.5s ease !important;
-    display: inline-block !important;
-    text-align: center !important;
-    box-shadow: 0 0 1rem var(--main-color) !important;
-}
-
-.submit-btn:hover {
-    box-shadow: none !important;
-    background: transparent !important;
-    color: var(--main-color) !important;
-}
-
-.submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-@media (max-width: 600px) {
     .submit-btn {
-        padding: 1.2rem !important;
-        font-size: 1.6rem !important;
+        width: 100% !important;
+        padding: 1.4rem !important;
+        font-size: 1.8rem !important;
+        font-weight: 600 !important;
+        background: var(--main-color) !important;
+        color: #000 !important;
+        border: 2px solid var(--main-color) !important;
+        border-radius: 4rem !important;
+        cursor: pointer !important;
+        transition: 0.5s ease !important;
+        display: inline-block !important;
+        text-align: center !important;
+        box-shadow: 0 0 1rem var(--main-color) !important;
     }
-}
+
+    .submit-btn:hover {
+        box-shadow: none !important;
+        background: transparent !important;
+        color: var(--main-color) !important;
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 600px) {
+        .submit-btn {
+            padding: 1.2rem !important;
+            font-size: 1.6rem !important;
+        }
+    }
 </style>
+
 <script>
     // Contact Form - Updated
-const contactForm = document.getElementById('contact-form');
-const successMessage = document.getElementById('success-message');
-const backBtn = document.getElementById('back-btn');
+    const contactForm = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    const backBtn = document.getElementById('back-btn');
 
-if (contactForm && successMessage && backBtn) {
-    const submitBtn = contactForm.querySelector('.submit-btn');
-    contactForm.addEventListener('submit', async e => {
-        e.preventDefault();
-        const originalText = submitBtn ? submitBtn.textContent : "Send Message";
-        if (submitBtn) {
-            submitBtn.textContent = "Sending...";
-            submitBtn.disabled = true;
-        }
-        try {
-            const formData = new FormData(contactForm);
-            const response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                body: formData,
-            });
-            const data = await response.json();
-            if (data.success) {
-                contactForm.style.display = 'none';
-                successMessage.style.display = 'block';
-                contactForm.reset();
-            } else {
-                alert("Error: " + data.message);
-            }
-        } catch (err) {
-            alert("Network error. Please try again.");
-        } finally {
+    if (contactForm && successMessage && backBtn) {
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        contactForm.addEventListener('submit', async e => {
+            e.preventDefault();
+            const originalText = submitBtn ? submitBtn.textContent : "Send Message";
             if (submitBtn) {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                submitBtn.textContent = "Sending...";
+                submitBtn.disabled = true;
             }
-        }
-    });
-    backBtn.addEventListener('click', () => {
-        successMessage.style.display = 'none';
-        contactForm.style.display = 'block';
-    });
-}
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                if (data.success) {
+                    contactForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    contactForm.reset();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            } catch (err) {
+                alert("Network error. Please try again.");
+            } finally {
+                if (submitBtn) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }
+        });
+        backBtn.addEventListener('click', () => {
+            successMessage.style.display = 'none';
+            contactForm.style.display = 'block';
+        });
+    }
 </script>
 
 <!-- ===== FOOTER ===== -->
@@ -2920,49 +2939,6 @@ if (contactForm && successMessage && backBtn) {
                 cvPopup.style.display = "none";
             }
         });
-
-        // Contact Form
-        const contactForm = document.getElementById('contact-form');
-        const successMessage = document.getElementById('success-message');
-        const backBtn = document.getElementById('back-btn');
-
-        if (contactForm && successMessage && backBtn) {
-            const submitBtn = contactForm.querySelector('input[type="submit"]');
-            contactForm.addEventListener('submit', async e => {
-                e.preventDefault();
-                const originalText = submitBtn ? submitBtn.value : "Send";
-                if (submitBtn) {
-                    submitBtn.value = "Sending...";
-                    submitBtn.disabled = true;
-                }
-                try {
-                    const formData = new FormData(contactForm);
-                    const response = await fetch("https://api.web3forms.com/submit", {
-                        method: "POST",
-                        body: formData,
-                    });
-                    const data = await response.json();
-                    if (data.success) {
-                        contactForm.style.display = 'none';
-                        successMessage.style.display = 'block';
-                        contactForm.reset();
-                    } else {
-                        alert("Error: " + data.message);
-                    }
-                } catch (err) {
-                    alert("Network error. Please try again.");
-                } finally {
-                    if (submitBtn) {
-                        submitBtn.value = originalText;
-                        submitBtn.disabled = false;
-                    }
-                }
-            });
-            backBtn.addEventListener('click', () => {
-                successMessage.style.display = 'none';
-                contactForm.style.display = 'block';
-            });
-        }
 
         // Comment Form
         const commentForm = document.getElementById("commentForm");
